@@ -1,0 +1,13 @@
+MORPH GRID: 
+Use the parent class morph-grid to contain grid-items.
+- The grid items will have a thumbnail and a section for full content.
+- When hovered, the initially showing thumbnail will morph into the expanded content while keeping the thumbnail on the left.
+
+<div class="morph-grid" >
+    <div class="grid-item">
+        <div class="content">Thumbnail</div>
+        <div class="expanded-content">Full content</div>
+    </div>
+</div>
+
+
