@@ -1,0 +1,24 @@
+.index_background {
+    position: absolute;
+    width: 100%;
+    opacity: .3;
+    z-index: -1;
+    margin-top: -75px;
+}
+.landing-section{
+    width: 1280px;
+    display: flex;
+    gap: 130px;
+}
+.landing-section-header-text{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.landing-section-operators{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
