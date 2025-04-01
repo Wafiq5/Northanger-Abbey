@@ -62,37 +62,98 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-function positionStickyNotes() {
-    const stickyNotes = document.querySelectorAll(".sticky-note");
 
-    stickyNotes.forEach(stickyNote => {
-        const targetSelector = stickyNote.getAttribute("data-target");
-        const offsetX = stickyNote.getAttribute("data-offsetX");
-        const offsetY = stickyNote.getAttribute("data-offsetY");
-        const X = stickyNote.getAttribute("data-X");
-        const Y = stickyNote.getAttribute("data-Y");
+const gridItems = document.querySelectorAll('.grid-item');
 
-        const targetElement = document.querySelector(targetSelector);
+const options = {
+    root: null,
+    rootMargin: '0px', 
+    threshold: 0.1  
+};
 
-        if (targetElement) {
-            const rect = targetElement.getBoundingClientRect();
-            
-            // Position the sticky note next to its target element
-            stickyNote.style.left = `${rect.right - offsetX}px`;
-            stickyNote.style.top = `${rect.top -  offsetY}px`;
-            stickyNote.style.position = "absolute";
-        }else{
-            const rect = targetElement.getBoundingClientRect();
-
-            stickyNote.style.left = `${X}px`;
-            stickyNote.style.top = `${Y}px`;
-            stickyNote.style.position = "absolute";
+const observerCallback = (entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('slide');
+            observer.unobserve(entry.target);
         }
     });
-}
+};
 
-// Run function on page load
-window.addEventListener("DOMContentLoaded", positionStickyNotes);
+const observer = new IntersectionObserver(observerCallback, options);
 
-// Update position when the window resizes
-window.addEventListener("resize", positionStickyNotes);
+gridItems.forEach(item => {
+    observer.observe(item);
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    const img = document.querySelector('img.character-relation-diagram');
+    if (!img) return;
+    
+    const imgContainer = img.parentElement;
+    
+    const reflectionContainer = document.createElement('div');
+    reflectionContainer.className = 'reflection-container';
+    
+    const reflection = document.createElement('div');
+    reflection.className = 'reflection';
+    
+    imgContainer.style.perspective = '400px';
+    imgContainer.style.width = 'fit-content';
+    imgContainer.style.margin = '0 auto';
+    imgContainer.style.position = 'relative';
+    
+    reflectionContainer.style.width = '100%';
+    reflectionContainer.style.height = '40px';
+    reflectionContainer.style.margin = '0 auto';
+    reflectionContainer.style.position = 'relative';
+    reflectionContainer.style.transformStyle = 'preserve-3d';
+    
+    
+    
+    img.style.maxWidth = '90%';
+    img.style.width = '80%';
+    img.style.height = 'auto';
+    img.style.display = 'block';
+    img.style.margin = '0 auto';
+    img.style.transition = 'transform 0.3s ease-out';
+    img.style.transformStyle = 'preserve-3d';
+    
+    reflectionContainer.appendChild(reflection);
+    
+    img.parentNode.insertBefore(reflectionContainer, img.nextSibling);
+    
+    let isHovering = false;
+    
+    imgContainer.addEventListener('mouseenter', function() {
+        isHovering = true;
+        img.style.transform = 'translateZ(10px) scale(1.02)';
+        
+        reflection.style.opacity = '0.7';
+    });
+    
+    imgContainer.addEventListener('mousemove', function(e) {
+        if (!isHovering) return;
+        
+        const rect = imgContainer.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const xRelative = (x / rect.width) * 2 - 1;
+        const yRelative = (y / rect.height) * 2 - 1;
+    
+        
+        img.style.transform = `rotateY(${xRelative * 10}deg) rotateX(${-yRelative * 10}deg) translateZ(20px) scale(1.03)`;
+        
+        reflection.style.transform = `rotateX(180deg) rotateY(${xRelative * 10}deg) rotateX(${yRelative * 10}deg) translateZ(-1px)`;
+    });
+    
+    imgContainer.addEventListener('mouseleave', function() {
+        isHovering = false;
+        img.style.transition = 'transform 0.6s ease-out, box-shadow 0.6s ease-out';
+        img.style.transform = 'rotateY(0deg) rotateX(0deg) translateZ(0) scale(1)';
+        
+        reflection.style.opacity = '0.6';
+        reflection.style.transform = 'rotateX(180deg) translateZ(-1px)';
+    });
+});

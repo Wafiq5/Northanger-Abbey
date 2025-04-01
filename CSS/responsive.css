@@ -12,4 +12,7 @@
     .family{
         align-items: center;
     }
+    .subtitle{
+        font-size: 16px;
+    }
 }
