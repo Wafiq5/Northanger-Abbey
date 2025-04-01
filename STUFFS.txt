@@ -11,3 +11,13 @@ Use the parent class morph-grid to contain grid-items.
 </div>
 
 
+POPUP:
+<span class="highlight" data-info="Highlighted text" data-width="200" data-height="150">Highlighted text
+                <div class="popup">
+                    <div class="popup-content">
+                        Popup text goes here
+                        <img src="image.jpg" alt="Description">
+                    </div>
+                </div>
+            </span>
+

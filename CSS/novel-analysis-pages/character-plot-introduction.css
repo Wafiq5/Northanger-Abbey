@@ -1,0 +1,56 @@
+.character-plot-introduction-section{
+    width: 1000px;
+    position: relative;
+    padding-top: 100px;
+    margin: 0 500px;
+    
+    gap: 50px;
+}
+
+.character-plot-introduction-title{
+    display: flex;
+    flex-direction: column;
+}
+
+.character-plot-introduction-background{
+    margin-top: -100px;
+}
+.family{
+    display: flex;
+    flex-direction: column;
+}
+.character-introduction-section{
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    gap: 30px;
+}
+.family-name{
+    font-size: 24px;
+    font-family: var(--font-2);
+    letter-spacing: 7px;
+    font-weight: 1000;
+
+}
+.characters{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.character-name{
+    font-weight: 1000;
+    font: 18px;
+}
+.character-details{
+    line-height: 20px;
+}
+.character-details-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+}
+
+.family{
+    display: flex;
+    flex-direction: column;
+}

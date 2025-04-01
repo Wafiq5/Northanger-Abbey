@@ -1,0 +1,15 @@
+@media (max-width: 1068px) {
+    .grid-item:hover .content{
+        opacity: .2;
+        transition: opacity 0.7s ease-in-out;
+        width: 0;
+        height: 0;
+    }
+    .morph-grid{
+        flex-direction: column;
+        height: 900px;
+    }
+    .family{
+        align-items: center;
+    }
+}

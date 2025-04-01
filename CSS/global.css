@@ -1,11 +1,12 @@
 :root {
     --font-1: "Alice in Wonderland";
-    --font-2: "Times New Roman";
+    --font-2: "Silent Dream";
+    --hand-writing-font: "Reenie Beanie";
     --p-background: #222222;
-    --s-background: #050f04 ;
-    --p-gradient-start: #309900;
-    --p-gradient-end: #005600;
-    --shadow: #071606;
+    --s-background: #272b27 ;
+    --p-gradient-start: #5c9641;
+    --p-gradient-end: #318531;
+    --shadow: #3a3a3a;
     --p-text: #ffffff;
 }
 
@@ -14,6 +15,15 @@
     src: url(../FONTS/Alice_in_Wonderland_3.ttf);
 }
 
+@font-face {
+    font-family: "Silent Dream";
+    src: url(../FONTS/Silent_Dream.ttf);
+}
+
+@font-face {
+    font-family: "Reenie Beanie";
+    src: url(../FONTS/ReenieBeanie-Regular.ttf);
+}
 * {
     /* outline: red solid 1px; */
     margin: 0;
@@ -42,30 +52,35 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: start;
     align-content: flex-start;
     position: relative;
     height: 300px;
-    width: 800px;
+    width: clamp(100px, 75vw, 840px);
     gap: 10px;
+    transition: opacity 0.7s ease-in-out;
+
 }
 
 .grid-item{
     width: 200px;
     height: 200px;
-    background-color: var(--s-background);
+    background-color: var(--p-background);
     transition: width 0.7s ease-in-out, height 0.7s ease-in-out, opacity 0.3s ease-in-out, padding 0.9s ease-in-out;
     flex-shrink: 0;
     border-radius: 30px;
     overflow: hidden;
     position: relative;
-    box-shadow: 0px 0px 20px var(--shadow);
 
     /* THIS IS INSIDE THE CARD THINGY */
     display: flex;
     flex-direction: row;
     gap: 30px;
 }
-
+.grid-item .content{
+    transition: opacity 0.7s ease-in-out;
+    
+}
 .grid-item .expanded-content{
     opacity: 0;
     transition: opacity 0.7s ease-in-out;
@@ -92,7 +107,6 @@ body {
 }
 
 
-/* THIS IS FOR THE CHARACTER GRID */
 .character-thumbnail-image{
     transition: width 0.7s ease-in-out;
     width: 200px;
@@ -110,10 +124,58 @@ body {
     width: 70ch;
 }
 
+
+.highlight {
+    position: relative;
+    cursor: pointer;
+    text-decoration: underline;
+    color: blue;
+}
+
+.popup {
+    position: absolute;
+    background: var(--p-background);
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 20px var(--shadow);
+    width: fit-content;
+    height: fit-content;
+    opacity: 0;
+    z-index: 10000000;
+    overflow: hidden;
+    border-radius: 15px;
+    top: 100%;
+    left: 0;
+    margin-top: 10px;
+    transition: all .9s ease-in-out;
+    pointer-events: none;
+}
+
+.popup-content {
+    opacity: 0;
+    transition: all .9s ease-in-out;
+}
+
+.highlight:hover .popup {
+    
+    opacity: 1;
+    pointer-events: all;
+}
+
+.highlight:hover .popup-content {
+    opacity: 1;
+}
+
+.popup img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-top: 10px;
+}
+
 /*! SECTIONS */
 .section-container{
     width: 100%;
-    height: 100vh;
     position: relative;
 
     display: flex;
@@ -130,22 +192,100 @@ body {
     font-family: var(--font-1);
     font-size: 100px;
     letter-spacing: 7px;
+    text-align: center;
+    text-shadow: 0px 0px 20px var(--shadow);
+}
+.section-header{
+    font-family: var(--font-1);
+    font-size: 60px;
+    letter-spacing: 7px;
+    text-align: center;
+    text-shadow: 0px 0px 20px var(--shadow);
 }
 .subtitle{
-    font-size: 24px;
+    font-size: 20px;
 }
-/* BUTTONS */
-.button-1{
-    color: var(--p-text);
-    font-weight: 500;
-    opacity: 0.75;
-    background-color: var(--p-text);
-    padding: 10px 20px;
-    font-size: 18px;
-    border-radius: 50em;
-    border: 4px solid transparent;
-    background: linear-gradient(45deg, var(--p-gradient-start), var(--p-gradient-end)) padding-box,
-    linear-gradient(45deg, var(--p-gradient-start), var(--p-gradient-end)) border-box;
-    color: var(--p-text);
+.sub-header{
+    font-family: var(--font-1);
+    font-size: 35px;
+    letter-spacing: 7px;
+    text-align: center;
+    text-shadow: 0px 0px 20px var(--shadow);
 }
 
+.section-background{
+    position: absolute;
+    width: 100%;
+    opacity: .3;
+    height: 100vh;
+    top: 0;
+    object-fit: cover;
+    z-index: -1;
+}
+/*! BUTTONS */
+
+
+.button-1 {
+    width: 220px;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: #fff;
+    background: var(--p-background);
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    transition: all .3s ease-in-out;
+    font-size: 15px;
+}
+
+.button-1:before {
+    content: '';
+    background: linear-gradient(45deg, var(--p-gradient-start), var(--p-gradient-end));
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+
+}
+
+.button-1:active:after {
+    background: var(--s-background);
+}
+
+.button-1:hover:before {
+    opacity: .4;
+}
+
+.button-1:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--p-background);
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+    transition: all .3s ease-in-out;
+
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
+
+
+
+/*! THE FAMILIES (CHARACTERS) */
