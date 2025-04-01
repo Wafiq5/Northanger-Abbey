@@ -90,4 +90,10 @@
     transform-style: preserve-3d;
     transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
 }
-
+.plot-introduction{
+    gap: 30px;
+}
+.plot-introduction-paragraph{
+    width: 70ch;
+    line-height: 50px;
+}

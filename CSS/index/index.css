@@ -25,19 +25,7 @@
     align-items: center;
     gap: 10px;
 }
-.landing-section-creators{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    opacity: .3;
-}
-.creators-by{
-    font-size: 18px;
-}
-.creator-name{
-    font-size: 12px;
-}
+
 .novel-author{
     font-size: 24px;
 }

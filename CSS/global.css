@@ -43,6 +43,20 @@ body {
     height: 100vh;
 }
 
+.creators{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    opacity: .3;
+}
+.creators-by{
+    font-size: 18px;
+}
+.creator-name{
+    font-size: 12px;
+}
+
 /*! THAT MORPHING GRID */
 
 

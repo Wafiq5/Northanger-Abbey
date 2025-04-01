@@ -1,0 +1,95 @@
+
+
+
+.sticky-note {
+  position: absolute;
+  display: inline-block;
+  
+  color: #000;
+  background: var(--p-background);
+  width: 16em;
+  height: fit-content;
+  padding: 20px;
+  box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+  transform: rotate(-6deg);
+  transition: all .9s ease-in-out;
+  z-index: 1;
+  border-radius: 10px;
+}
+
+.sticky-note:active {
+  cursor: grabbing;
+}
+
+.sticky-note:hover,
+.sticky-note:focus {
+  box-shadow: 7px 7px 15px rgba(0,0,0,.7);
+  transform: scale(1.25);
+  z-index: 5;
+}
+
+/* Sticky note variations */
+.sticky-note.p-background { background: var(--p-background) }
+.sticky-note.s-background { background: var(--s-background) }
+
+
+/* Heading and text inside sticky notes */
+.sticky-note-heading {
+  font-size: 24px;
+  font-weight: bold;
+  padding-bottom: 10px;
+  margin: 0;
+}
+
+.sticky-note-text {
+  font-family: var(--hand-writing-font), arial, sans-serif;
+  font-size: 24px;
+  margin: 0;
+}
+
+/* List-based sticky notes (for backward compatibility) */
+.sticky-note-list {
+  list-style: none;
+  overflow: hidden;
+  padding: 3em;
+}
+
+.sticky-note-list .sticky-note-item {
+  list-style: none;
+  float: left;
+  margin: 1em;
+}
+
+.sticky-note-list .sticky-note-item .sticky-note-link {
+  text-decoration: none;
+  display: block;
+  height: 10em;
+  width: 10em;
+  padding: 1em;
+  box-shadow: 5px 5px 15px rgba(33,33,33,.7);
+  transition: all .9s ease-in-out;
+  background: #ffc;
+  transform: rotate(-6deg);
+}
+
+.sticky-note-list .sticky-note-item .sticky-note-link:hover,
+.sticky-note-list .sticky-note-item .sticky-note-link:focus {
+  box-shadow: 10px 10px 7px rgba(0,0,0,.7);
+  transform: scale(1.25);
+  position: relative;
+  z-index: 5;
+}
+
+/* Navigation (from original) */
+.sticky-note-nav {
+  text-align: center;
+}
+
+.sticky-note-nav .sticky-note-nav-item {
+  display: inline;
+  padding-right: 1em;
+}
+
+.sticky-note-nav .sticky-note-nav-item .sticky-note-nav-link {
+  color: #fff;
+}
