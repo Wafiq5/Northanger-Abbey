@@ -9,7 +9,7 @@
     margin-top: -75px;
 } 
 .landing-section{
-    width: 1280px;
+    width: clamp(100, 60vw, 1280px);
     display: flex;
     gap: 70px;
 }
