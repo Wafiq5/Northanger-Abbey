@@ -90,34 +90,56 @@ createAnimationObserver({
 });
 
 document.addEventListener("DOMContentLoaded", function() {
-    const notes = document.querySelectorAll(".sticky-note");
-
-    notes.forEach(note => {
-        const x = parseInt(note.getAttribute("data-x"), 10) || 100;
-        const y = parseInt(note.getAttribute("data-y"), 10) || 100;
-        note.style.left = `${x}px`;
-        note.style.top = `${y}px`;
-
-        let offsetX, offsetY, isDragging = false;
-
-        note.addEventListener("mousedown", (e) => {
+    document.querySelectorAll(".sticky-note").forEach(note => {
+        note.style.position = 'absolute';
+        note.style.cursor = 'grab';
+        note.style.userSelect = 'none';
+    
+        let offsetX, offsetY;
+        let isDragging = false;
+        let activeNote = null;
+    
+        note.addEventListener('mousedown', function (e) {
             isDragging = true;
-            offsetX = e.clientX - note.offsetLeft;
-            offsetY = e.clientY - note.offsetTop;
-            note.style.zIndex = "10";
-        });
-
-        document.addEventListener("mousemove", (e) => {
-            if (!isDragging) return;
-            note.style.left = `${e.clientX - offsetX}px`;
-            note.style.top = `${e.clientY - offsetY}px`;
-        });
-
-        document.addEventListener("mouseup", () => {
-            isDragging = false;
-            note.style.zIndex = "1";
+            activeNote = note;  // Set the active note
+            activeNote.classList.add('dragging'); 
+    
+            const noteRect = activeNote.getBoundingClientRect();
+            offsetX = e.clientX - noteRect.left;
+            offsetY = e.clientY - noteRect.top;
+    
+            activeNote.style.cursor = 'grabbing';
+            activeNote.style.zIndex = '1000';
+    
+            function onMouseMove(e) {
+                if (!isDragging) return;
+    
+                activeNote.style.left = `${e.clientX - offsetX}px`;
+                activeNote.style.top = `${e.clientY - offsetY}px`;
+            }
+    
+            function onMouseUp() {
+                if (!isDragging) return;
+    
+                isDragging = false;
+                activeNote.classList.remove('dragging');
+                activeNote.style.cursor = 'grab';
+                activeNote.style.zIndex = '1';
+    
+                // Cleanup event listeners
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+            }
+    
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+    
+            e.preventDefault();
         });
     });
+    
+
+
     const timelineEntries = document.querySelectorAll('.timeline-entry');
     if (timelineEntries.length > 0) {
         createAnimationObserver({
@@ -460,7 +482,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 body.offsetHeight; // Force reflow
                 body.style.height = '0';
                 
-                // Remove active class after animation completes
                 setTimeout(() => {
                     item.classList.remove('active');
                 }, 300);
@@ -468,7 +489,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
     
-    // Remove any onclick handlers from HTML
     document.querySelectorAll('.accordion-expandable-item[onclick]').forEach(item => {
         item.removeAttribute('onclick');
     });

@@ -1,6 +1,5 @@
 .character-plot-introduction-section{
     width: 1000px;
-    position: relative;
     padding-top: 100px;
     margin: 0 500px;
     
@@ -56,9 +55,8 @@
     flex-direction: column;
 }
 
-/* 3D effect for character relationship diagram */
 .character-relation-diagram-container {
-    perspective: 100000px;
+    perspective: 100000000000000000000000000px;
     transition: all .9s ease-in-out;
 }
 

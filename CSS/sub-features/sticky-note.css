@@ -3,7 +3,6 @@
 
 .sticky-note {
   position: absolute;
-  display: inline-block;
   
   color: #000;
   background: var(--p-background);
