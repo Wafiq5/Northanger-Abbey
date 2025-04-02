@@ -9,14 +9,22 @@
     <link rel="stylesheet" href="../../CSS/responsive.css">
     <link rel="stylesheet" href="../../CSS/novel-analysis-pages/character-plot-introduction.css">
     <link rel="stylesheet" href="../../CSS/sub-features/sticky-note.css">
+    <link rel="stylesheet" href="../../CSS/sub-features/quiz-app.css">
 
+    <script src="https://kit.fontawesome.com/ad467bedef.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
 
 
-
-
+    <div class="explore-bar">
+        <ul class="explore-bar-ul">
+            <div class="explore-bar-title button-2">Explore more!</div>
+            <li class="explore-bar-li button-2" onclick="window.location.href='../main/timeline.html'" data-hover-text="Story Timeline"><i class="fa-solid fa-timeline"></i></li>
+            <!-- <li class="explore-bar-li button-2" onclick="window.location.href='HTML/sub-pages/projects.html'" data-hover-text="Gallery"><i class="fa-solid fa-images"></i></li> -->
+            <li class="explore-bar-li button-2" onclick="window.location.href='../main/analysis.html'" data-hover-text="Analysis"><i class="fa-solid fa-magnifying-glass"></i></li>
+        </ul>
+    </div>
 
     <div class="character-plot-introduction-section-sontainer section-container">
         <img src="../../Images/northanger-abbey-mansion.png"
@@ -35,7 +43,7 @@
                 <div class="characters">
                     <!--! MORLAND FAMILY -->
                     <div class="family morland">
-                        <span class="family-name">Morlands</span>
+                        <span class="family-name">Morland</span>
 
                         <div class="morph-grid">
                             <div class="grid-item">
@@ -142,7 +150,7 @@
                                 <div class="content"><img src="../../Images/elenor-tilney.png"
                                         class="character-thumbnail-image"></div>
                                 <div class="expanded-content character-details-container">
-                                    <div class="character-name">Elenor Tilney</div>
+                                    <div class="character-name">Eleanor Tilney</div>
                                     <div class="character-details">
                                         Eleanor Tilney is a kind and gentle character. She's Henry Tilney's sister and
                                         is known for being thoughtful and intelligent. She's a good friend to Catherine
@@ -228,10 +236,9 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
+            <div class="divider"></div>
             <div class="character-relation-diagram-container section-container">
                 <div class="character-relation-diagram section">
                     <div class="character-relation-diagram-title sub-header">Character relations</div>
@@ -242,16 +249,18 @@
             </div>
             <div class="plot-introduction-container section-container">
                 <div class="sticky-note s-background" style="margin-left: -200px; margin-top: -200px;">
-                    <div class="sticky-note-text">Catherine’s love for Gothic novels plays a key role in shaping her perceptions and actions.</div>
+                    <div class="sticky-note-text">Catherine’s love for Gothic novels plays a key role in shaping her
+                        perceptions and actions.</div>
                 </div>
                 <div class="sticky-note p-background" style="margin-left: 660px; margin-top: -200px;">
-                    <div class="sticky-note-text">=The plot introduces Catherine’s growth from a naive, imaginative girl to someone who understands the difference between fiction and reality.</div>
+                    <div class="sticky-note-text">The plot introduces Catherine’s growth from a naive, imaginative girl
+                        to someone who understands the difference between fiction and reality.</div>
                 </div>
                 <div class="plot-introduction section">
                     <div class="plot-introduction-title sub-header">
                         Plot introduction
                     </div>
-                    <div class="plot-introduction-paragraph">
+                    <div class="plot-introduction-paragraph  analysis-paragraph">
                         Catherine Morland, a young and somewhat naive girl with a love for Gothic novels, is invited to
                         visit Bath, where she meets the charming Henry Tilney and his sister, Eleanor. During her time
                         in Bath, she becomes friends with the Tilneys and eventually receives an invitation to stay at
@@ -261,22 +270,43 @@
                         lead her to misunderstand the reality of her situation. As Catherine navigates her feelings for
                         Henry and her growing awareness of the world around her, she learns that things are not always
                         as they seem.
+                        
                     </div>
                 </div>
-                <div class="sticky-note s-background" style="margin-left: -300px; margin-top: 100px;" >
-                    <div class="sticky-note-text">Bath, where Catherine meets Henry Tilney, is a popular setting in Austen’s works, representing social life and romance</div>
+                <div class="sticky-note s-background" style="margin-left: -300px; margin-top: 100px;">
+                    <div class="sticky-note-text">Bath, where Catherine meets Henry Tilney, is a popular setting in
+                        Austen’s works, representing social life and romance</div>
                 </div>
             </div>
+            <div class="divider"></div>
+
+            <div class="character-plot-quiz-container quiz-container">
+                <div class="character-plot-quiz-title sub-header">Take a quiz!</div>
+                <div class="quiz-app-container" data-quiz="characterQuiz">
+                    <div class="quiz-progress" id="quizProgress"></div>
+                    <div class="question-container" id="questionContainer"></div>
+                    <div class="answer-container" id="answerContainer"></div>
+                </div>
+            </div>
+            <div class="divider"></div>
+
+            
             <div class="creators-container">
                 <div class="creators">
-                    <span class="creators-by">Created By</span> 
-                    <span class="creator-name">Ahmad Sadid Wafiq</span> 
-                    <span class="creator-name">Miguel Gasper</span> 
+                    <span class="creators-by">Created By</span>
+                    <span class="creator-name">Ahmad Sadid Wafiq</span>
+                    <span class="creator-name">Miguel Gasper</span>
                     <span class="creator-name">Thomas Nguyen</span>
                 </div>
             </div>
+            <div class="divider"></div>
+
         </div>
         <script src="../../JAVASCRIPT/main.js"></script>
+        <script src="../../JAVASCRIPT/quiz-app.js"></script>
+        <script src="../../JAVASCRIPT/styles.js"></script>
+
+
 </body>
 
 </html>

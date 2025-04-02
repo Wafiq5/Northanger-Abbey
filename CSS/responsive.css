@@ -5,6 +5,9 @@
         width: 0;
         height: 0;
     }
+    .grid-item{
+        flex-direction: column;
+    }
     .morph-grid{
         flex-direction: column;
         height: 900px;
