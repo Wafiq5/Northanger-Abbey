@@ -53,7 +53,6 @@ function createAnimationObserver({
     return observer;
 }
 
-// Highlight popup functionality
 document.querySelectorAll('.highlight').forEach(el => {
     const popup = document.createElement('div');
     popup.classList.add('popup');
@@ -90,56 +89,6 @@ createAnimationObserver({
 });
 
 document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll(".sticky-note").forEach(note => {
-        note.style.position = 'absolute';
-        note.style.cursor = 'grab';
-        note.style.userSelect = 'none';
-    
-        let offsetX, offsetY;
-        let isDragging = false;
-        let activeNote = null;
-    
-        note.addEventListener('mousedown', function (e) {
-            isDragging = true;
-            activeNote = note;  // Set the active note
-            activeNote.classList.add('dragging'); 
-    
-            const noteRect = activeNote.getBoundingClientRect();
-            offsetX = e.clientX - noteRect.left;
-            offsetY = e.clientY - noteRect.top;
-    
-            activeNote.style.cursor = 'grabbing';
-            activeNote.style.zIndex = '1000';
-    
-            function onMouseMove(e) {
-                if (!isDragging) return;
-    
-                activeNote.style.left = `${e.clientX - offsetX}px`;
-                activeNote.style.top = `${e.clientY - offsetY}px`;
-            }
-    
-            function onMouseUp() {
-                if (!isDragging) return;
-    
-                isDragging = false;
-                activeNote.classList.remove('dragging');
-                activeNote.style.cursor = 'grab';
-                activeNote.style.zIndex = '1';
-    
-                // Cleanup event listeners
-                document.removeEventListener('mousemove', onMouseMove);
-                document.removeEventListener('mouseup', onMouseUp);
-            }
-    
-            document.addEventListener('mousemove', onMouseMove);
-            document.addEventListener('mouseup', onMouseUp);
-    
-            e.preventDefault();
-        });
-    });
-    
-
-
     const timelineEntries = document.querySelectorAll('.timeline-entry');
     if (timelineEntries.length > 0) {
         createAnimationObserver({
@@ -302,7 +251,6 @@ document.addEventListener("DOMContentLoaded", function() {
         characterPlotBackgroundImage.style.transition = 'opacity 0.3s ease-out';
         
         function updateBackgroundOpacity() {
-            // Calculate opacity based on scroll position
             const scrollPosition = window.scrollY;
             
             if (scrollPosition <= fadeStartPosition) {
@@ -312,6 +260,52 @@ document.addEventListener("DOMContentLoaded", function() {
             } else {
                 const fadeProgress = (scrollPosition - fadeStartPosition) / fadeDistance;
                 characterPlotBackgroundImage.style.opacity = (1 - fadeProgress).toFixed(2);
+            }
+            
+            lastScrollY = scrollPosition;
+            ticking = false;
+        }
+        
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    updateBackgroundOpacity();
+                });
+                ticking = true;
+            }
+        });
+        
+        updateBackgroundOpacity();
+        
+    }
+
+    const indexBackgroundImage = document.querySelector('.index_background');
+    if (indexBackgroundImage) {
+        let lastScrollY = window.scrollY;
+        let ticking = false;
+        let fadeStartPosition = 100;
+        let fadeDistance = 400;
+        
+        indexBackgroundImage.style.position = 'fixed';
+        indexBackgroundImage.style.top = '0';
+        indexBackgroundImage.style.left = '0';
+        indexBackgroundImage.style.width = '100%';
+        indexBackgroundImage.style.height = '100vh';
+        indexBackgroundImage.style.objectFit = 'cover';
+        indexBackgroundImage.style.zIndex = '-1';
+        indexBackgroundImage.style.opacity = '.4';
+        indexBackgroundImage.style.transition = 'opacity 0.3s ease-out';
+        
+        function updateBackgroundOpacity() {
+            const scrollPosition = window.scrollY;
+            
+            if (scrollPosition <= fadeStartPosition) {
+                indexBackgroundImage.style.opacity = '.4';
+            } else if (scrollPosition >= fadeStartPosition + fadeDistance) {
+                indexBackgroundImage.style.opacity = '0';
+            } else {
+                const fadeProgress = (scrollPosition - fadeStartPosition) / fadeDistance;
+                indexBackgroundImage.style.opacity = (1 - fadeProgress).toFixed(2);
             }
             
             lastScrollY = scrollPosition;
@@ -443,18 +437,15 @@ document.addEventListener("DOMContentLoaded", function() {
     
     accordionLists.forEach(list => {
         list.addEventListener('click', function(e) {
-            // Find the clicked accordion item by traversing up from the click target
             const item = e.target.closest('.accordion-expandable-item');
-            if (!item) return; // Click wasn't on an accordion item
+            if (!item) return;
             
             const body = item.querySelector('.accordion-expandable-body');
             if (!body) return;
             
-            console.log('Accordion clicked:', item); // Add for debugging
+            console.log('Accordion clicked:', item);
             
-            // Toggle active state
             if (!item.classList.contains('active')) {
-                // First close any other open accordions in this list
                 const openItems = list.querySelectorAll('.accordion-expandable-item.active');
                 openItems.forEach(openItem => {
                     if (openItem !== item) {
@@ -464,22 +455,18 @@ document.addEventListener("DOMContentLoaded", function() {
                     }
                 });
                 
-                // Get accurate content height before animation
                 body.style.height = 'auto';
                 const height = body.scrollHeight;
                 body.style.height = '0';
                 
-                // Force reflow before changing properties
                 body.offsetHeight;
                 
-                // Animate open
                 item.classList.add('active');
                 body.style.height = height + 'px';
                 
             } else {
-                // Animate closed
                 body.style.height = body.scrollHeight + 'px';
-                body.offsetHeight; // Force reflow
+                body.offsetHeight;
                 body.style.height = '0';
                 
                 setTimeout(() => {
@@ -492,4 +479,42 @@ document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll('.accordion-expandable-item[onclick]').forEach(item => {
         item.removeAttribute('onclick');
     });
+
+
+    //! SECTION SCROLLER
+function scrollToSection(anchorId, targetSectionId, offsetNo, block) {
+        const button = document.getElementById(anchorId);
+        const targetSection = document.getElementById(targetSectionId);
+        
+        if (!button) {
+            console.error(`Button with ID "${anchorId}" not found`);
+            return;
+        }
+        
+        if (!targetSection) {
+            console.error(`Target section with ID "${targetSectionId}" not found`);
+            return;
+        }
+        
+        console.log(`Setting up scroll for ${anchorId} to ${targetSectionId}`);
+        
+        button.style.cursor = 'pointer';
+        
+        button.addEventListener("click", function(e) {
+            e.preventDefault();
+            console.log(`Scrolling to ${targetSectionId}`);
+            
+            const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - offsetNo;
+            
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        });
+}
+
+scrollToSection('miguel-analysis-link', 'miguel-analysis', 20, "start");
+scrollToSection('thomas-analysis-1-link', 'thomas-analysis-1', 20, "start");
+scrollToSection('thomas-analysis-2-link', 'thomas-analysis-2', 20, "start");
+scrollToSection('wafiq-analysis-link', 'wafiq-analysis', 20, "start");
 });
